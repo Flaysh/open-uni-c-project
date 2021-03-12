@@ -126,7 +126,7 @@ void printError(int lineNum, const char *format, ...);
 
 /* Transition methods */
 int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC);
-int secondTransitionRead(int *memoryArr, int* areArr, Line *linesArr, int lineNum, int IC, int DC);
+int secondPassRead(int *memoryArr, int* areArr, Line *linesArr, int lineNum, int IC, int DC);
 
 #endif
 

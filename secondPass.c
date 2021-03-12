@@ -1,21 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 /*
-*********************************
-Assembler Project - Mmn 14 2020A
-FILENAME: secondTransition.c
-FILE INFORMATION : This file is used in order to get the data structures from the first read, and convert the information into bits.
-BY: Gal Nagli
-DATE: MARCH 06 2020
-*********************************
+C Project 2021A - Assembler
+Served by:
+Itay Flaysher - 318378395
+Maxim Voloshin - 327032991
+
+secondPass.c - works with data and memory and rechecks for errors.
 */
-/* *****Includes ***** */
+
 #include "header.h"
 #include <stdlib.h>
-/* ***** Externs ***** */
-/* Use the commands list from firstTransition.c */
-extern const Command commandArray[];
 
-/* Use the data from firstTransition.c */
+/* data from the first pass */
+extern const Command commandArray[];
 extern Label labelsArray[MAX_LABELS_NUM];
 extern int labelsCount;
 extern Line *entryLines[MAX_LABELS_NUM];
@@ -24,24 +21,23 @@ extern int dataArray[MAX_DATA_LENGTH];
 
 /* ***** Methods ***** */
 
-/* updateDataLabelsAddress function updates the addresses of all the data labels in labelsArray. */
+/* update the addresses in LabelsArray. */
 void updateDataLabelsAddress(int IC)
 {
-	int i;
-
-	/* Search in the array for label with isData flag */
-	for (i = 0; i < labelsCount; i++)
-	{
-		if (labelsArray[i].isData)
-		{
-			/* Increase the address */
-			labelsArray[i].address += IC;
-		}
-	}
+    int i;
+    /* Search in the array for label with isData flag */
+    for (i = 0; i < labelsCount; i++)
+    {
+        if (labelsArray[i].isData)
+        {
+            /* Increase the address */
+            labelsArray[i].address += IC;
+        }
+    }
 }
 
-/* countIllegalEntries function returns if there is an illegal entry line in entryLines. */
-int countIllegalEntries()
+/* returns if there is an illegal entry line in entryLines. */
+int countWrongEntries()
 {
 	int i, ret = 0;
 	Label *label;
@@ -69,9 +65,8 @@ int countIllegalEntries()
 
 
 
-/* updateLabelOpAddress function check's if the op is a label, this method is updating the value of the it to be the address of the label. */
-/* Returns FALSE if there is an error, or TRUE otherwise. */
-bool updateLabelOpAddress(Operand *op, int lineNum)
+/* check if the operand is a label. then update the value to the address. If error accrued - return false.*/
+bool changeLabelOpAddress(Operand *op, int lineNum)
 {
 	if (op->type == LABEL || op->type == RELATIVE_LABEL) {
         Label *label = getLabel(op->str);
@@ -88,8 +83,8 @@ bool updateLabelOpAddress(Operand *op, int lineNum)
 return TRUE;
 }
 
-/* getNumFromMemoryWord function returns the int value of a memory word. */
-int getNumFromMemoryWord(MemoryWord memory)
+/* return the value of the memory word */
+int getMemoryWordNum(MemoryWord memory)
 {
     /* Create an int of "MEMORY_WORD_LENGTH" times '1', and all the rest are '0' */
     unsigned int mask = ~0;
@@ -100,19 +95,18 @@ int getNumFromMemoryWord(MemoryWord memory)
 
 }
 
-/* getOpTypeId function returns the id of the addressing method of the operand */
+/* returns the id of the method and the op */
 int getOpTypeId(Operand op)
 {
 	/* Check if the operand have legal type */
 	if (op.type != INVALID)
 	{
-		/* NUMBER = 0, LABEL = 1,RELATIVE_LABEL = 2 REGISTER = 3 */
 		return (int)op.type;
 	}
 	return -1;
 }
 
-/* getCmdMemoryWord function returns a memory word which represents the Command in a line. */
+/* returns a memory word for a command. */
 MemoryWord getCmdMemoryWord(Line line)
 {
 	MemoryWord memory = {0 };
@@ -128,9 +122,7 @@ MemoryWord getCmdMemoryWord(Line line)
         line.op1.type = 0;
     }
 
-
     mask >>= (sizeof(int) * BYTE_SIZE - MEMORY_WORD_LENGTH);
-
 	mask += line.cmd->opcode;
 	mask<<= 4;
 	mask+= line.cmd->funct;
@@ -139,13 +131,11 @@ MemoryWord getCmdMemoryWord(Line line)
 	mask<<=2;
 	mask+= getOpTypeId(line.op2);
 	memory.value  = mask;
-
-
 	return memory;
 }
 
-/* getOpMemoryWord function returns a memory word which represents the operand (assuming it's a valid operand). */
-MemoryWord getOpMemoryWord(Operand op, bool isDest, int Relative_label_firstcmd)
+/* Returns a memory word which represents the operand (assuming it's a valid operand). */
+MemoryWord getMemoryWordOp(Operand op, bool isDest, int Relative_label_firstcmd)
 {
 	MemoryWord memory = {0 };
 
@@ -171,13 +161,11 @@ MemoryWord getOpMemoryWord(Operand op, bool isDest, int Relative_label_firstcmd)
 		    mask <<=1;
 		    j++;
         }
-
 		memory.value = mask;
 	}
 	else if (op.type == RELATIVE_LABEL)
 	{
         Label *label = getLabel(op.str);
-
         /* Set are */
         if ( label && label->isExtern)
         {
@@ -185,17 +173,12 @@ MemoryWord getOpMemoryWord(Operand op, bool isDest, int Relative_label_firstcmd)
         }
         else
         {
-            /* DVIR REPAIR */
-
             if(isExistingEntryLabel(op.str))
             {
                 memory.are = (areType)RELOCATABLE;
             }
         }
-
-        /* check repair */
         memory.value = op.value - Relative_label_firstcmd + 1;
-
 	}
 	else if(isExistingLabel(op.str))
 	{
@@ -218,106 +201,104 @@ MemoryWord getOpMemoryWord(Operand op, bool isDest, int Relative_label_firstcmd)
 	return memory;
 }
 
-/* addWordToMemory function adds the value of memory word to the memoryArr, and increase the memory counter. */
+/*  Adds the value of a memWord to the array and increases the counter*/
 void addWordToMemory(int *memoryArr, int* areArray, int *memoryCounter, MemoryWord memory)
 {
-	/* Check if memoryArr isn't full yet */
+    /* check if the array is full */
 	if (*memoryCounter < MAX_DATA_LENGTH)
 	{
-		/* Add the memory word and increase memoryCounter */
+        /* add the word and increase the counter */
 		areArray[(*memoryCounter)] = memory.are;
-		memoryArr[(*memoryCounter)++] = getNumFromMemoryWord(memory);
+		memoryArr[(*memoryCounter)++] = getMemoryWordNum(memory);
 	}
 }
 
-/* addLineToMemory function adds a whole line into the memoryArr, and increase the memory counter. */
+/* Adds a line to the memory array and add to counter*/
 bool addLineToMemory(int *memoryArr, int *areArray, int *memoryCounter, Line *line)
 {
-	bool foundError = FALSE;
-    int Relative_label_firstcmd;
-	/* Don't do anything if the line is error or if it's not a Command line */
+	bool isError = FALSE;
+    int RelativeLabelFirstCommand;
+    /* check if the line is error or if it's not a Command line */
 	if (!line->isError && line->cmd != NULL)
 	{
-		/* Update the label operands value */
-		if (!updateLabelOpAddress(&line->op1, line->lineNum) || !updateLabelOpAddress(&line->op2, line->lineNum))
+        /* Update the operands */
+		if (!changeLabelOpAddress(&line->op1, line->lineNum) || !changeLabelOpAddress(&line->op2, line->lineNum))
 		{
 			line->isError = TRUE;
-			foundError = TRUE;
+            isError = TRUE;
 		}
 
-		/* Add the Command word to the memory */
+		/* Add the command word to the memory */
 		addWordToMemory(memoryArr,areArray, memoryCounter, getCmdMemoryWord(*line));
-        Relative_label_firstcmd = *memoryCounter + 100 + 1 ;
+        RelativeLabelFirstCommand = *memoryCounter + 101 ;
 			/* Check if there is a source operand in this line */
 			if (line->op1.type != INVALID)
 			{
 				/* Add the op1 word to the memory */
 				line->op1.address = DEFAULT_ADDRESS + *memoryCounter;
-				addWordToMemory(memoryArr,areArray, memoryCounter, getOpMemoryWord(line->op1, FALSE,Relative_label_firstcmd));
-				/* ^^ The FALSE param means it's not the 2nd op */
+				addWordToMemory(memoryArr, areArray, memoryCounter,
+                                getMemoryWordOp(line->op1, FALSE, RelativeLabelFirstCommand));
 			}
 
-			/*Check if there is a destination operand in this line */
+        /*Check for dest operand in line */
 			if (line->op2.type != INVALID)
 			{
-				/* Add the op2 word to the memory */
+                /* add the second operand to the memory */
 				line->op2.address = DEFAULT_ADDRESS + *memoryCounter;
-				addWordToMemory(memoryArr,areArray, memoryCounter, getOpMemoryWord(line->op2, TRUE,Relative_label_firstcmd));
-				/* ^^ The TRUE param means it's the 2nd op */
+				addWordToMemory(memoryArr, areArray, memoryCounter,
+                                getMemoryWordOp(line->op2, TRUE, RelativeLabelFirstCommand));
 			}
 		}
-
-
-	return !foundError;
+	return !isError;
 }
 
-/* addDataToMemory function adds the data from dataArray to the end of memoryArr. */
+/* Adds the data from data array to the end of memory array. */
 void addDataToMemory(int *memoryArr ,int *memoryCounter, int DC)
 {
 	int i;
-	/* Create an int of "MEMORY_WORD_LENGTH" times '1', and all the rest are '0' */
-	unsigned int mask = ~0;
-	mask >>= (sizeof(int) * BYTE_SIZE - MEMORY_WORD_LENGTH);
+    /* "MEMORY_WORD_LENGTH" X '1', and all the rest are '0' */
+	unsigned int temp = ~0;
+    temp >>= (sizeof(int) * BYTE_SIZE - MEMORY_WORD_LENGTH);
 
-	/* Add each int from dataArray to the end of memoryArr */
+    /* add the integers from data array to the memory array */
 	for (i = 0; i < DC; i++)
 	{
 		if (*memoryCounter < MAX_DATA_LENGTH)
 		{
-			/* The mask makes sure we only use the first "MEMORY_WORD_LENGTH" bits */
-			memoryArr[(*memoryCounter)++] = mask & dataArray[i];
+			memoryArr[(*memoryCounter)++] = temp & dataArray[i];
 		}
 		else
 		{
-			/* No more space in memoryArr */
+            /* No space left */
 			return;
 		}
 	}
 }
 
-/* secondTransitionRead function reads the data from the file for the second time. */
-/* It converts all the lines into the memory. */
-int secondTransitionRead(int *memoryArr, int* areArr, Line *linesArr, int lineNum, int IC, int DC)
-{
-	int errorsFound = 0, memoryCounter = 0, i;
 
-	/* Update the data labels */
+/* reads the data from the file. */
+/* converts all the lines into the memory. */
+int secondPassRead(int *memoryArr, int* areArr, Line *linesArr, int lineNum, int IC, int DC)
+{
+	int errorsCount = 0, memoryCount = 0, i;
+
+    /* Update data labels */
 	updateDataLabelsAddress(IC);
 
-	/* Check if there are illegal entries */
-	errorsFound += countIllegalEntries();
+    /* Check for wrong inputs*/
+	errorsCount += countWrongEntries();
 
-	/* Add each line in linesArr to the memoryArr */
+    /* moves the data from lines array to the memoryArr*/
 	for (i = 0; i < lineNum; i++)
 	{
-		if (!addLineToMemory(memoryArr,areArr, &memoryCounter, &linesArr[i]))
+		if (!addLineToMemory(memoryArr, areArr, &memoryCount, &linesArr[i]))
 		{
-			/* An error was found while adding the line to the memory */
-			errorsFound++;
+            /* ERROR FOUND */
+			errorsCount++;
 		}
 	}
 
-	/* Add the data from dataArray to the end of memoryArr */
-	addDataToMemory(memoryArr, &memoryCounter, DC);
-	return errorsFound;
+    /* move data from dataArray to the end of memoryArr */
+	addDataToMemory(memoryArr, &memoryCount, DC);
+	return errorsCount;
 }

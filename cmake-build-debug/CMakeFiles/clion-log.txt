@@ -1,4 +1,4 @@
-/app/extra/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/bin/gcc -G "CodeBlocks - Unix Makefiles" /home/flaysh/Projects/Compare-C-Projects/C_finished_project
+/app/extra/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/bin/gcc -G "CodeBlocks - Unix Makefiles" /home/flaysh/Projects/Compare-C-Projects/c-final
 -- The C compiler identification is GNU 10.2.0
 -- Check for working C compiler: /bin/gcc
 -- Check for working C compiler: /bin/gcc - works
@@ -8,4 +8,4 @@
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug
+-- Build files have been written to: /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug

@@ -289,7 +289,7 @@ void parseFile(char *fileName)
 	/* First Read */
 	numOfErrors += firstPassRead(file, linesArr, &linesFound, &IC, &DC);
 	/* Second Read */
-	numOfErrors += secondTransitionRead(memoryArr,areArr, linesArr, linesFound, IC, DC);
+	numOfErrors += secondPassRead(memoryArr, areArr, linesArr, linesFound, IC, DC);
 
 	/* Create Output Files */
 	if (numOfErrors == 0)

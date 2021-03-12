@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Flayshhhh.dir/firstTransition.c.o"
+  "CMakeFiles/Flayshhhh.dir/firstPass.c.o"
   "CMakeFiles/Flayshhhh.dir/main.c.o"
-  "CMakeFiles/Flayshhhh.dir/secondTransition.c.o"
-  "CMakeFiles/Flayshhhh.dir/utility.c.o"
+  "CMakeFiles/Flayshhhh.dir/secondPass.c.o"
+  "CMakeFiles/Flayshhhh.dir/utils.c.o"
   "Flayshhhh"
   "Flayshhhh.pdb"
 )

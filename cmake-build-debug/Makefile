@@ -68,10 +68,10 @@ RM = /app/extra/clion/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/flaysh/Projects/Compare-C-Projects/C_finished_project
+CMAKE_SOURCE_DIR = /home/flaysh/Projects/Compare-C-Projects/c-final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug
+CMAKE_BINARY_DIR = /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug/CMakeFiles /home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,32 +143,32 @@ Flayshhhh/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/build
 .PHONY : Flayshhhh/fast
 
-firstTransition.o: firstTransition.c.o
+firstPass.o: firstPass.c.o
 
-.PHONY : firstTransition.o
+.PHONY : firstPass.o
 
 # target to build an object file
-firstTransition.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/firstTransition.c.o
-.PHONY : firstTransition.c.o
+firstPass.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/firstPass.c.o
+.PHONY : firstPass.c.o
 
-firstTransition.i: firstTransition.c.i
+firstPass.i: firstPass.c.i
 
-.PHONY : firstTransition.i
+.PHONY : firstPass.i
 
 # target to preprocess a source file
-firstTransition.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/firstTransition.c.i
-.PHONY : firstTransition.c.i
+firstPass.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/firstPass.c.i
+.PHONY : firstPass.c.i
 
-firstTransition.s: firstTransition.c.s
+firstPass.s: firstPass.c.s
 
-.PHONY : firstTransition.s
+.PHONY : firstPass.s
 
 # target to generate assembly for a file
-firstTransition.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/firstTransition.c.s
-.PHONY : firstTransition.c.s
+firstPass.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/firstPass.c.s
+.PHONY : firstPass.c.s
 
 main.o: main.c.o
 
@@ -197,59 +197,59 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/main.c.s
 .PHONY : main.c.s
 
-secondTransition.o: secondTransition.c.o
+secondPass.o: secondPass.c.o
 
-.PHONY : secondTransition.o
-
-# target to build an object file
-secondTransition.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/secondTransition.c.o
-.PHONY : secondTransition.c.o
-
-secondTransition.i: secondTransition.c.i
-
-.PHONY : secondTransition.i
-
-# target to preprocess a source file
-secondTransition.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/secondTransition.c.i
-.PHONY : secondTransition.c.i
-
-secondTransition.s: secondTransition.c.s
-
-.PHONY : secondTransition.s
-
-# target to generate assembly for a file
-secondTransition.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/secondTransition.c.s
-.PHONY : secondTransition.c.s
-
-utility.o: utility.c.o
-
-.PHONY : utility.o
+.PHONY : secondPass.o
 
 # target to build an object file
-utility.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/utility.c.o
-.PHONY : utility.c.o
+secondPass.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/secondPass.c.o
+.PHONY : secondPass.c.o
 
-utility.i: utility.c.i
+secondPass.i: secondPass.c.i
 
-.PHONY : utility.i
+.PHONY : secondPass.i
 
 # target to preprocess a source file
-utility.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/utility.c.i
-.PHONY : utility.c.i
+secondPass.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/secondPass.c.i
+.PHONY : secondPass.c.i
 
-utility.s: utility.c.s
+secondPass.s: secondPass.c.s
 
-.PHONY : utility.s
+.PHONY : secondPass.s
 
 # target to generate assembly for a file
-utility.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/utility.c.s
-.PHONY : utility.c.s
+secondPass.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/secondPass.c.s
+.PHONY : secondPass.c.s
+
+utils.o: utils.c.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/utils.c.o
+.PHONY : utils.c.o
+
+utils.i: utils.c.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/utils.c.i
+.PHONY : utils.c.i
+
+utils.s: utils.c.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Flayshhhh.dir/build.make CMakeFiles/Flayshhhh.dir/utils.c.s
+.PHONY : utils.c.s
 
 # Help Target
 help:
@@ -260,18 +260,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Flayshhhh"
-	@echo "... firstTransition.o"
-	@echo "... firstTransition.i"
-	@echo "... firstTransition.s"
+	@echo "... firstPass.o"
+	@echo "... firstPass.i"
+	@echo "... firstPass.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... secondTransition.o"
-	@echo "... secondTransition.i"
-	@echo "... secondTransition.s"
-	@echo "... utility.o"
-	@echo "... utility.i"
-	@echo "... utility.s"
+	@echo "... secondPass.o"
+	@echo "... secondPass.i"
+	@echo "... secondPass.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 

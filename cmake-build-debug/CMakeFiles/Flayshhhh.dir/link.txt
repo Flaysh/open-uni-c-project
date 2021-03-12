@@ -1,1 +1,1 @@
-/bin/gcc -g   CMakeFiles/Flayshhhh.dir/main.c.o CMakeFiles/Flayshhhh.dir/firstTransition.c.o CMakeFiles/Flayshhhh.dir/secondTransition.c.o CMakeFiles/Flayshhhh.dir/utility.c.o  -o Flayshhhh 
+/bin/gcc -g   CMakeFiles/Flayshhhh.dir/main.c.o CMakeFiles/Flayshhhh.dir/firstPass.c.o CMakeFiles/Flayshhhh.dir/secondPass.c.o CMakeFiles/Flayshhhh.dir/utils.c.o  -o Flayshhhh 
