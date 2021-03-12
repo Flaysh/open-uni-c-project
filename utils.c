@@ -1,31 +1,23 @@
-#define _CRT_SECURE_NO_WARNINGS
 /*
-*********************************
-Assembler Project - Mmn 14 2020A
-FILENAME: utility.c
-FILE INFORMATION : This file contains utility parsing functions, which i have assembled particulary for the first read.
-BY: Gal Nagli
-DATE: MARCH 06 2020
-*********************************
+C Project 2021A - Assembler
+By:
+Itay Flaysher - 318378395
+Maxim Voloshin - 327032991
+
+utils.c - contains all the helpers functions.
 */
 
-
-/* ***** Includes ***** */
 #include "header.h"
 #include <ctype.h>
 #include <stdlib.h>
 
-/* ***** Methods ***** */
 extern const Command commandArray[];
 extern Label labelsArray[];
 extern int labelsCount;
 extern Line *entryLines[MAX_LABELS_NUM];
 extern int entryLabelCount;
 
-/* getLabel function will determine if a certein label exists, if so, it will return a pointer to the certain label, otherwise it will return NULL */
-/* The label will be the 'labelName' from the labelsArray
- *
- * CHECKS IF A LABEL EXSIT IN THE LABEL ARRAY*/
+/* If a certain label exists in the array It will return a pointer to the certain label, otherwise it will return NULL */
 Label *getLabel(char *labelName)
 {
 	int i = 0;
@@ -42,10 +34,8 @@ Label *getLabel(char *labelName)
 	}
 	return NULL;
 }
-/* getCommand function will determine if a certein Command exists, if so, it will return the Command id, otherwise it will return -1*/
-/* The Command will be the'cmdName' from the commandArray
- *
- * CHECKS IF A COMMAND NAME EXIST - IS VALID*/
+
+/* If Command exists in the array, It will return the Command id, if not it will return -1*/
 int getCommand(char *cmdName)
 {
 	int i = 0;
@@ -62,7 +52,7 @@ int getCommand(char *cmdName)
 	return -1;
 }
 
-/* trimLeftString function will remove spaces from the start of the string */
+/* Trim space from the beginning of the string */
 void trimLeftString(char **ptStr)
 {
 	/* Return if it's NULL */
@@ -78,7 +68,7 @@ void trimLeftString(char **ptStr)
 	}
 }
 
-/* trimString fuction will Remove all the spaces from the edges of the string ptStr is pointing to. */
+/* Delete all the spaces from the edges of the string ptStr is pointing to */
 void trimString(char **ptStr)
 {
 	char *endofstring;
@@ -101,8 +91,7 @@ void trimString(char **ptStr)
 	}
 }
 
-/* getToken function returns a pointer to the start of the first token. */
-/* Also makes *endOfTok (if it's not NULL) to point at the last char after the token. */
+/* Returns a pointer to the start of the first token. And makes *endOfTok to point at the last char after the token. */
 char *getToken(char *str, char **endOfTok)
 
 {
@@ -134,7 +123,7 @@ char *getToken(char *str, char **endOfTok)
 	return tokStart;
 }
 
-/* isOneWord function returns if string contains only one word. */
+/* Returns if string contains only one word. */
 bool isOneWord(char *str)
 {
     trimLeftString(&str);/* Skip the spaces at the start */
@@ -146,7 +135,7 @@ bool isOneWord(char *str)
 	return isWhiteSpace(str);
 }
 
-/* isWhiteSpace function returns if string contains only white chars. */
+/* Returns if string contains only white chars. */
 bool isWhiteSpace(char *str)
 {
 	while (*str)
@@ -159,7 +148,7 @@ bool isWhiteSpace(char *str)
 	return TRUE;
 }
 
-/* isLegalLabel function returns if labelStr is a legal label name.*/
+/* Returns if labelStr is a legal label name.*/
 bool isLegalLabel(char *labelStr, int lineNum, bool printErrors)
 {
 	int labelLength = strlen(labelStr), i;
@@ -167,14 +156,14 @@ bool isLegalLabel(char *labelStr, int lineNum, bool printErrors)
 	/* Check if the label is at the correct eligable length */
 	if (strlen(labelStr) > MAX_LABEL_LENGTH)
 	{
-		if (printErrors) printError(lineNum, "Label is too long. Max label name length is %d.", MAX_LABEL_LENGTH);
+		if (printErrors) printError(lineNum, "Label is too long. Max label length is %d.", MAX_LABEL_LENGTH);
 		return FALSE;
 	}
 
 	/* Check if the label isn't an empty string */
 	if (*labelStr == '\0')
 	{
-		if (printErrors) printError(lineNum, "Label name is empty.");
+		if (printErrors) printError(lineNum, "Label is empty.");
 		return FALSE;
 	}
 
@@ -190,7 +179,7 @@ bool isLegalLabel(char *labelStr, int lineNum, bool printErrors)
 	{
 		if (!isalnum(labelStr[i]))
 		{
-			if (printErrors) printError(lineNum, "\"%s\" is illegal label - use letters and numbers only.", labelStr);
+			if (printErrors) printError(lineNum, "\"%s\" is illegal label - use numbers and letters only.", labelStr);
 			return FALSE;
 		}
 	}
@@ -232,7 +221,7 @@ bool isExistingLabel(char *label)
 	return FALSE;
 }
 
-/* isExistingEntryLabel function return if the label is already in the entry lines array. */
+/* iReturn if the label is already in the entry lines array. */
 bool isExistingEntryLabel(char *labelName)
 {
 	int i = 0;
@@ -250,7 +239,7 @@ bool isExistingEntryLabel(char *labelName)
 	return FALSE;
 }
 
-/* isRegister function returns if str is a register name, and update value to be the register value. */
+/* Returns if str is a register name, and update value to be the register value. */
 bool isRegister(char *str, int *value)
 {
 	if (str[0] == 'r'  && str[1] >= '0' && str[1] - '0' <= MAX_REGISTER_DIGIT && str[2] == '\0') 
@@ -266,7 +255,7 @@ bool isRegister(char *str, int *value)
 	return FALSE;
 }
 
-/* isEmpty function returns a bool, represent whether 'line' is a comment or not. */
+/* Returns a bool, represent whether 'line' is a comment or not. */
 /* If the first char is ';' but it's not at the start of the line, it returns true and update line->isError to be TRUE. */
 bool isEmpty(Line *line)
 {
@@ -287,7 +276,7 @@ bool isEmpty(Line *line)
 	if (*startOfText == ';')
 	{
 		/* Illegal comment - ';' isn't at the start of the line */
-		printError(line->lineNum, "Comments must start with ';' at the start of the line.");
+		printError(line->lineNum, "Comments need to start with ';' at the beginning of the line.");
 		line->isError = TRUE;
 		return TRUE;
 	}
@@ -296,7 +285,7 @@ bool isEmpty(Line *line)
 	return FALSE;
 }
 
-/* getFirstOperand function returns a pointer to the start of the first operand in 'line' and change the end of it to '\0'. */
+/* Returns a pointer to the start of the first operand in 'line' and change the end of it to '\0'. */
 /* Also makes *endOfOp (if it's not NULL) point at the next char after the operand. */
 char *getFirstOperand(char *line, char **endOfOp, bool *foundComma)
 {
@@ -315,8 +304,7 @@ char *getFirstOperand(char *line, char **endOfOp, bool *foundComma)
 			*foundComma = FALSE;
 		}
 
-		/* Set endOfOp (if it's not NULL) to point at the next char after the operand
-		(Or at the end of it if it's the end of the line) */
+		/* Set endOfOp (if it's not NULL) to point at the next char after the operand */
 		if (endOfOp)
 		{
 			if (end)
@@ -334,14 +322,14 @@ char *getFirstOperand(char *line, char **endOfOp, bool *foundComma)
 	return line;
 }
 
-/* isDirective function returns if the cmd is a Directive. */
+/* Returns if the cmd is a Directive. */
 bool isDirective(char *cmd)
 {
 	return (*cmd == '.') ? TRUE : FALSE;
 }
 
-/* isLegalStrParam function returns if the strParam is a legal string param (enclosed in quotes), and remove the quotes. */
-bool isLegalStrParam(char **strParam, int lineNum)
+/* Returns if the strParam is a legal string param (enclosed in quotes), and remove the quotes. */
+bool isLegalStringParam(char **strParam, int lineNum)
 {
 	/* check if the string param is enclosed in quotes */
 	if ((*strParam)[0] == '"' && (*strParam)[strlen(*strParam) - 1] == '"')
@@ -358,13 +346,13 @@ bool isLegalStrParam(char **strParam, int lineNum)
 	}
 	else
 	{
-		printError(lineNum, "The parameter for .string must be enclosed in quotes.");
+		printError(lineNum, "The parameter for .string must be inside a quotes.");
 	}
 	return FALSE;
 }
 
-/* isLegalNum function returns if the num is a legal number param, and save it's value in *value. */
-bool isLegalNum(char *numStr, int numOfBits, int lineNum, int *value)
+/* Returns if the num is a legal number param, and save it's value in *value. */
+bool isLegalNumber(char *numStr, int numOfBits, int lineNum, int *value)
 {
 	char *endOfNum;
 	/* maxNum is the max number you can represent with (MAX_LABEL_LENGTH - 1) bits 
@@ -382,17 +370,15 @@ bool isLegalNum(char *numStr, int numOfBits, int lineNum, int *value)
 	/* Check if endOfNum is at the end of the string */
 	if (*endOfNum)
 	{
-		printError(lineNum, "\"%s\" isn't a valid number.", numStr);
+		printError(lineNum, "\"%s\" is not a valid number.", numStr);
 		return FALSE;
 	}
 
-	/* Check if the number is small enough to fit into 1 memory word 
-	(if the absolute value of number is smaller than 'maxNum' */
+    /* Check if the number is small enough to fit into 1 memory word */
 	if (*value > maxNum || *value < -maxNum)
 	{
 		printError(lineNum, "\"%s\" is too %s, must be between %d and %d.", numStr, (*value > 0) ? "big" : "small", -maxNum, maxNum);
 		return FALSE;
 	}
-
 	return TRUE;
 }

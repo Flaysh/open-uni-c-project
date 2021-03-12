@@ -112,14 +112,14 @@ bool isOneWord(char *str);
 bool isWhiteSpace(char *str);
 void trimString(char **ptStr);
 bool isDirective(char *cmd);
-bool isLegalStrParam(char **strParam, int lineNum);
+bool isLegalStringParam(char **strParam, int lineNum);
 bool isExistingEntryLabel(char *labelName);
 bool isRegister(char *str, int *value);
 bool isEmpty(Line *line);
 bool isLegalLabel(char *label, int lineNum, bool printErrors);
 bool isExistingLabel(char *label);
 char *getFirstOperand(char *line, char **endOfOp, bool *foundComma);
-bool isLegalNum(char *numStr, int numOfBits, int lineNum, int *value);
+bool isLegalNumber(char *numStr, int numOfBits, int lineNum, int *value);
 
 /* main methods */
 void printError(int lineNum, const char *format, ...);

@@ -188,7 +188,7 @@ void parseDataDirective(Line *line, int *IC, int *DC)
 		operandTok = getFirstOperand(line->lineStr, &endOfOp, &foundComma);
 
 		/* Add the param to dataArray */
-		if (isLegalNum(operandTok, MEMORY_WORD_LENGTH, line->lineNum, &operandValue))
+		if (isLegalNumber(operandTok, MEMORY_WORD_LENGTH, line->lineNum, &operandValue))
 		{
 			if (!addNumberToData(operandValue, IC, DC, line->lineNum))
 			{
@@ -229,7 +229,7 @@ void parseStringDirective(Line *line, int *IC, int *DC)
 
     trimString(&line->lineStr);
 
-	if (isLegalStrParam(&line->lineStr, line->lineNum))
+	if (isLegalStringParam(&line->lineStr, line->lineNum))
 	{
 		if (!addStringToData(line->lineStr, IC, DC, line->lineNum))
 		{
@@ -366,7 +366,7 @@ void parseOpInfo(Operand *operand, int lineNum)
 		}
 		else
 		{
-			operand->type = isLegalNum(operand->str, MEMORY_WORD_LENGTH, lineNum, &value) ? NUMBER : INVALID;
+			operand->type = isLegalNumber(operand->str, MEMORY_WORD_LENGTH, lineNum, &value) ? NUMBER : INVALID;
 		}
 	 }
 	/* Check if the type is REGISTER */

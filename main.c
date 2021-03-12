@@ -1,32 +1,27 @@
 /*
-*********************************
-Assembler Project - Mmn 14 2020A
-FILENAME: main.c
-FILE INFORMATION : This file will manage the process of the assembler, it will call the first and second read methods.
-afterwards, it will create the output files: file.ob,file.ent.file.ext.
-BY: Gal Nagli
-DATE: MARCH 06 2020
-*********************************
+C Project 2021A - Assembler
+Served by:
+Itay Flaysher - 318378395
+Maxim Voloshin - 327032991
+
+main.c - this is the main file that contains the main function and send the program to the first and second pass
+and manage the printing.
 */
 
-/* ======== Includes ======== */
 #include "header.h"
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
-/* ====== Global Data Structures ====== */
-/* Labels Array */
 Label labelsArray[MAX_LABELS_NUM];
 int labelsCount = 0;
-/* Entry Lines */
-Line *entryLines[MAX_LABELS_NUM]; /**/
+Line *entryLines[MAX_LABELS_NUM];
 int entryLabelCount = 0;
-/* Data Array */
 int dataArray[MAX_DATA_LENGTH];
 
+
 /* ====== Methods ====== */
-/* getNumDecimalLength function will return decimal number length, which will be useful for the print function */
+/* Return decimal number length, which will be useful for the print function */
 int getNumDecimalLength(int num)
 {
 	int l = !num;
@@ -49,8 +44,8 @@ void printError(int lineNum, const char *format, ...)
 	va_end(args);
 }
 
-/* fprintfDest function prints the dest value as decimal, with at least 4 digits. */
-void fprintfDest(FILE *file, int num)
+/* Prints the dest value as decimal, with at least 4 digits. */
+void printDestToFile(FILE *file, int num)
 {
 	/* Add zeros first, to make the length 4 digits. */
 	int length;
@@ -60,7 +55,8 @@ void fprintfDest(FILE *file, int num)
 	fprintf(file, "%d", num);
 }
 
-void fprintfAre(FILE *file, int num)
+/* print A,R,E types to the ob file.*/
+void printAREToFile(FILE *file, int num)
 {
    if (num == 4)
        fprintf(file, " A");
@@ -78,31 +74,27 @@ void fprintfAre(FILE *file, int num)
    }
 }
 
-/* fprintfICDC function prints the IC and DC value as decimal */
-
-void fprintfICDC(FILE *file, int num)
+/* Prints the IC and DC value as decimal */
+void printICDCToFile(FILE *file, int num)
 {
 	fprintf(file, "\t%d", num);
 }
 
-/* fprintfEnt function prints the entry value as decimal */
-
-void fprintfEnt(FILE *file, int num)
+/* Prints the entry value as decimal */
+void printEntryToFile(FILE *file, int num)
 {
 	fprintf(file, "%d", num);
 }
-/* fprintfData function print's the data as octal representation, with 5 digits. */
 
-void fprintfData(FILE *file, int num)
+/* print data to the file */
+void printDataToFile(FILE *file, int num)
 {
     uint16_t x = num;
     fprintf(file,"%03X",x);
 }
 
-
-/* fprintfExt function prints the Ext value as decimal */
-
-void fprintfExt(FILE *file, int num)
+/* Prints the Extern value as decimal */
+void printExternToFile(FILE *file, int num)
 {
 	int length;
 	length = getNumDecimalLength(num);
@@ -110,7 +102,8 @@ void fprintfExt(FILE *file, int num)
 		fprintf(file,"0");
 	fprintf(file, "%d", num);
 }
-/* openFile function creates a file (for writing) from a given name and ending, and returns a pointer to it. */
+
+/* Creates a file from a given name and ending, and returns a pointer to it. */
 FILE *openFile(char *name, char *ending, const char *mode)
 {
 	FILE *file;
@@ -123,7 +116,7 @@ FILE *openFile(char *name, char *ending, const char *mode)
 	return file;
 }
 
-/* createObjectFile function creates the .obj file*/
+/* Creates the .obj file*/
 void createObjectFile(char *name, int IC, int DC, int *memoryArr,int* areArray)
 {
 	int i;
@@ -131,23 +124,23 @@ void createObjectFile(char *name, int IC, int DC, int *memoryArr,int* areArray)
 	file = openFile(name, ".ob", "w");
 
 	/* Print IC and DC */
-	fprintfICDC(file, IC);
+	printICDCToFile(file, IC);
 	fprintf(file, "\t\t");
-	fprintfICDC(file, DC);
+	printICDCToFile(file, DC);
 
 	/* Print all of memoryArr */
 	for (i = 0; i < IC + DC; i++)
 	{
 		fprintf(file, "\n");
-		fprintfDest(file, DEFAULT_ADDRESS + i); /* adding the 100 to the IC print */
+		printDestToFile(file, DEFAULT_ADDRESS + i); /* adding the 100 to the IC print */
 		fprintf(file, "\t\t");
-		fprintfData(file, memoryArr[i]);
-		fprintfAre(file,areArray[i]);
+		printDataToFile(file, memoryArr[i]);
+		printAREToFile(file, areArray[i]);
 	}
 	fclose(file);
 }
 
-/* createEntriesFile function creates the .ent file, which contains the addresses for the .entry labels */
+/* Creates the .ent file */
 void createEntriesFile(char *name)
 {
 	int i;
@@ -164,7 +157,7 @@ void createEntriesFile(char *name)
 	for (i = 0; i < entryLabelCount; i++)
 	{
 		fprintf(file, "%s\t\t", entryLines[i]->lineStr);
-		fprintfEnt(file, getLabel(entryLines[i]->lineStr)->address);
+		printEntryToFile(file, getLabel(entryLines[i]->lineStr)->address);
 
 		if (i != entryLabelCount - 1)
 		{
@@ -200,7 +193,7 @@ void createExternFile(char *name, Line *linesArr, int linesFound)
 					fprintf(file, "\n");
 				}
 				fprintf(file, "%s\t\t", label->name);
-				fprintfExt(file, linesArr[i].op1.address);
+				printExternToFile(file, linesArr[i].op1.address);
 				firstPrint = FALSE;
 			}
 		}
@@ -222,7 +215,7 @@ void createExternFile(char *name, Line *linesArr, int linesFound)
 				}
 
 				fprintf(file, "%s\t\t", label->name);
-				fprintfExt(file, linesArr[i].op2.address);
+				printExternToFile(file, linesArr[i].op2.address);
 				firstPrint = FALSE;
 			}
 		}
@@ -234,8 +227,8 @@ void createExternFile(char *name, Line *linesArr, int linesFound)
 	}
 }
 
-/* clearData function resets all the globals and free all the malloc blocks. */
-void clearData(Line *linesArr, int linesFound, int dataCount)
+/* Resets all the globals and free all the memory allocations. */
+void clearAllData(Line *linesArr, int linesFound, int dataCount)
 {
 	int i;
 
@@ -270,7 +263,7 @@ void clearData(Line *linesArr, int linesFound, int dataCount)
 	}
 }
 
-/* parseFile function parses a file, and creates the output files. */
+/* Parses a file, and creates the output files. */
 void parseFile(char *fileName)
 {
  	FILE *file = openFile("ps", ".as", "r");
@@ -298,15 +291,15 @@ void parseFile(char *fileName)
 		createObjectFile(fileName, IC, DC, memoryArr,areArr);
 		createExternFile(fileName, linesArr, linesFound); 
 		createEntriesFile(fileName);
-		printf("[Info] Created output files for the file \"%s.as\".\n", fileName);
+		printf("Success! Output files Created for \"%s.as\".\n", fileName);
 	}
 	else
 	{
 		/* print the number of errors. */
-		printf("[Info] A total number of %d error%s found in \"%s.as\".\n", numOfErrors, (numOfErrors > 1) ? "s were" : " was", fileName);
+		printf("%d error%s found in \"%s.as\".\n", numOfErrors, (numOfErrors > 1) ? "s were" : " was", fileName);
 	}
 	/* Free all malloc pointers, and reset the globals. */
-	clearData(linesArr, linesFound, IC + DC);
+	clearAllData(linesArr, linesFound, IC + DC);
 
 	/* Close File */
 	fclose(file);
@@ -318,7 +311,7 @@ int main(int argc, char *argv[])
 	int i;
     if (argc < 2)
 	{
-		printf("ERROR: No file names were given.\n");
+		printf("ERROR: No file names.\n");
 		return 1;
 	}
 	argc = 2;
