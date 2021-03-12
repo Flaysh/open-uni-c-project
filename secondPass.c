@@ -116,8 +116,9 @@ int getOpTypeId(Operand op)
 MemoryWord getCmdMemoryWord(Line line)
 {
 	MemoryWord memory = {0 };
+    int mask = 0;
 
-	if(getOpTypeId(line.op2) == -1)
+    if(getOpTypeId(line.op2) == -1)
     {
 	    line.op2.type = 0;
     }
@@ -128,7 +129,6 @@ MemoryWord getCmdMemoryWord(Line line)
     }
 
 
-	int mask = 0;
     mask >>= (sizeof(int) * BYTE_SIZE - MEMORY_WORD_LENGTH);
 
 	mask += line.cmd->opcode;
@@ -156,15 +156,17 @@ MemoryWord getOpMemoryWord(Operand op, bool isDest, int Relative_label_firstcmd)
 
 	if (op.type == REGISTER)
 	{
-		memory.are = (areType)ABSOLUTE; /* Registers are absolute */
         char *registr;
-        ++op.str;
-        registr = op.str;
-		int i = atoi(registr);
+        int i;
 		int j = 0;
 		int mask = 1;
+        memory.are = (areType)ABSOLUTE; /* Registers are absolute */
+        ++op.str;
+        registr = op.str;
+        i = atoi(registr);
 
-		while(j<i)
+
+        while(j<i)
         {
 		    mask <<=1;
 		    j++;

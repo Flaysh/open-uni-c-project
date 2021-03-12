@@ -287,7 +287,7 @@ void parseFile(char *fileName)
 	printf("\"%s.as\" opened Successfully.\n", fileName);
 
 	/* First Read */
-	numOfErrors += firstTransitionRead(file, linesArr, &linesFound, &IC, &DC);
+	numOfErrors += firstPassRead(file, linesArr, &linesFound, &IC, &DC);
 	/* Second Read */
 	numOfErrors += secondTransitionRead(memoryArr,areArr, linesArr, linesFound, IC, DC);
 

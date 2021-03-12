@@ -10,4 +10,4 @@ $(EXEC_FILE): $(O_FILES)
 %.o: %.c $(H_FILES)
 	gcc -Wall -ansi -pedantic -c -o $@ $<
 clean:
-	rm -f *.o $(EXEC_FILE)
+	rm -f *.o

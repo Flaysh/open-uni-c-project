@@ -125,7 +125,7 @@ bool isLegalNum(char *numStr, int numOfBits, int lineNum, int *value);
 void printError(int lineNum, const char *format, ...);
 
 /* Transition methods */
-int firstTransitionRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC);
+int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC);
 int secondTransitionRead(int *memoryArr, int* areArr, Line *linesArr, int lineNum, int IC, int DC);
 
 #endif

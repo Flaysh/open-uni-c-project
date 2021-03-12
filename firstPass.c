@@ -105,7 +105,7 @@ bool addNumberToData(int num, int *IC, int *DC, int lineNum)
 	return TRUE;
 }
 
-/* addStringToData function adds the given str to the dataArray and increases DC. Returns if it succeeded. */
+/* Adds the given str to the dataArray and increases DC. Returns if it succeeded. */
 bool addStringToData(char *str, int *IC, int *DC, int lineNum)
 {
 	do
@@ -119,42 +119,42 @@ bool addStringToData(char *str, int *IC, int *DC, int lineNum)
 	return TRUE;
 }
 
-/* labelEnd function finds the label in line->lineStr and add it to the label list. */
+/* finds the label in line->lineStr and add it to the label list. */
 /* Returns a pointer to the next char after the label, or NULL is there isn't a legal label. */
 char *findLabel(Line *line, int IC)
 {
 	char *labelEnd = strchr(line->lineStr, ':');
-	Label label = {0 };
+	Label label = {0};
 	label.address = DEFAULT_ADDRESS + IC;
 
-	/* Find the label (or return NULL if there isn't) */
+    /* Find the label (or return NULL if there's none) */
 	if (!labelEnd)
 	{
 		return NULL;
 	}
 	*labelEnd = '\0';
 
-	/* Check if the ':' came after the first word */
+    /* Check if the ':' came after the first word */
 	if (!isOneWord(line->lineStr))
 	{
 		*labelEnd = ':'; /* Fix the change in line->lineStr */
 		return NULL;
 	}
 
-	/* Check of the label is legal and add it to the labelList */
+    /* Check of the label is legal and add it to the labelList */
 	line->label = addLabelToArray(label, line);
 	return labelEnd + 1; /* +1 to make it point at the next char after the \0 */
 }
 
-/* removeLastLabel function ommits the last label in labelArr by updating labelsCount. */
-/* Used to remove the label from a entry/extern line. */
+/* remove the last label in labelArr and updating labelsCount. */
+/* removing the label from a entry/extern line. */
 void removeLastLabel(int lineNum)
 {
 	labelsCount--;
-	printf("[Warning] At line %d: The assembler ignored the label before the Directive.\n", lineNum);
+    printf("WARNING: At line %d: Assembler ignored label before the Directive.\n", lineNum);
 }
 
-/* parseDataDirective function parses a .data Directive. */
+/* Parses a .data Directive. */
 void parseDataDirective(Line *line, int *IC, int *DC)
 {
 	char *operandTok = line->lineStr, *endOfOp = line->lineStr;
@@ -217,7 +217,7 @@ void parseDataDirective(Line *line, int *IC, int *DC)
 	}
 }
 
-/* parseStringDirective function parses a .string Directive. */
+/* parses a .string Directive. */
 void parseStringDirective(Line *line, int *IC, int *DC)
 {
 	/* Make the label a data label (if there is one) */
@@ -246,7 +246,7 @@ void parseStringDirective(Line *line, int *IC, int *DC)
 	}
 }
 
-/* parseExternDirective function parses a .extern Directive. */
+/* parses a .extern Directive. */
 void parseExternDirective(Line *line)
 {
 	Label label = {0 }, *labelPointer;
@@ -268,7 +268,7 @@ void parseExternDirective(Line *line)
 	}
 }
 
-/* parseEntryDirective function parses a .entry Directive. */
+/* parses a .entry Directive. */
 void parseEntryDirective(Line *line)
 {
 	/* If there is a label in the line, remove the it from labelArr */
@@ -284,7 +284,7 @@ void parseEntryDirective(Line *line)
 	{
 		if (isExistingEntryLabel(line->lineStr))
 		{
-			printError(line->lineNum, "Label already defined as an entry label.");
+            printError(line->lineNum, "Label is already an entry label.");
 			line->isError = TRUE;
 		}
 		else if (entryLabelCount < MAX_LABELS_NUM)
@@ -294,7 +294,7 @@ void parseEntryDirective(Line *line)
 	}
 }
 
-/* parseDirective function parses the Directive and in a Directive line. */
+/* parses the Directive and in a Directive line. */
 void parseDirective(Line *line, int *IC, int *DC)
 {
 	int i = 0;
@@ -310,30 +310,28 @@ void parseDirective(Line *line, int *IC, int *DC)
 	}
 	
 	/* line->commandStr isn't a real Directive */
-	printError(line->lineNum, "No such Directive as \"%s\".", line->commandStr);
+    printError(line->lineNum, "\"%s\" is not directive.", line->commandStr);
 	line->isError = TRUE;
 }
 
-/* areLegalOpTypes function returns if the operands' types are legal (depending on the Command). */
-bool areLegalOpTypes(const Command *cmd, Operand op1, Operand op2, int lineNum)
+/* returns if the operands' types are legal (depending on the Command). */
+bool isLegalOpTypes(const Command *cmd, Operand op1, Operand op2, int lineNum)
 {
-	/* --- Check First Operand --- */
-	/* "lea" Command (opcode is 4) can only get a label as the 1st op */
-	if (cmd->opcode == 4 && op1.type != LABEL)
-	{
-		printError(lineNum, "Source operand for \"%s\" Command must be a label.", cmd->name);
-		return FALSE;
-	}
+    /* Check First Operand */
+    if (cmd->opcode == 4 && op1.type != LABEL)
+    {
+        printError(lineNum, "Source operand for \"%s\" Command must be a label.", cmd->name);
+        return FALSE;
+    }
 
-	/* --- Check Second Operand --- */
-	/* 2nd operand can be a number only if the Command is "cmp" (opcode is 1) or "prn" (opcode is 12).*/
-	if (op2.type == NUMBER && cmd->opcode != 1 && cmd->opcode != 13)
-	{
-		printError(lineNum, "Destination operand for \"%s\" Command can't be a number.", cmd->name);
-		return FALSE;
-	}
+    /* Check Second Operand */
+    if (op2.type == NUMBER && cmd->opcode != 1 && cmd->opcode != 13)
+    {
+        printError(lineNum, "Destination operand for \"%s\" Command can't be a number.", cmd->name);
+        return FALSE;
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 /* parseOpInfo function updates the type and value of operand. */
@@ -351,18 +349,19 @@ void parseOpInfo(Operand *operand, int lineNum)
 		return;
 	}
 
-    if (isLegalLabel(operand->str, lineNum, FALSE))
+    /* set the operand type */
+    if (isLegalLabel(operand->str, lineNum, FALSE)){
         operand->type = LABEL;
+    }
 
-	/* Check if the type is NUMBER */
-	if (*operand->str == '#')
-	{
+	/* Check the type is NUMBER */
+	if (*operand->str == '#'){
 		operand->str++; /* Remove the '#' */
 
 		/* Check if the number is legal */
-		if (isspace(*operand->str)) 
+		if (isspace(*operand->str))
 		{
-			printError(lineNum, "There is a white space after the '#'.");
+            printError(lineNum, "White space after '#'.");
 			operand->type = INVALID;
 		}
 		else
@@ -395,11 +394,9 @@ void parseOpInfo(Operand *operand, int lineNum)
 		operand->type = INVALID;
 		value = -1;
 	}
-
-	/*operand->value = value; */
 	}
 
-/* parseCmdOperand function parses the operands in a Command line. */
+/* parses the operands in a Command line. */
 void parseCmdOperands(Line *line, int *IC, int *DC)
 {
 	char *startOfNextPart = line->lineStr;
@@ -467,19 +464,19 @@ void parseCmdOperands(Line *line, int *IC, int *DC)
 	/* Check if there is a comma after the last param */
 	if (foundComma)
 	{
-		printError(line->lineNum, "Don't write a comma after the last parameter.");
+        printError(line->lineNum, "Comma after the last parameter.");
 		line->isError = TRUE;
 		return;
 	}
 	/* Check if the operands' types are legal */
-	if (!areLegalOpTypes(line->cmd, line->op1, line->op2, line->lineNum))
+	if (!isLegalOpTypes(line->cmd, line->op1, line->op2, line->lineNum))
 	{
 		line->isError = TRUE;
 		return;
 	}
 }
 
-/* parseCommand function parses the Command in a Command line. */
+/* Parses the Command in a Command line. */
 void parseCommand(Line *line, int *IC, int *DC)
 {
 
@@ -496,7 +493,7 @@ void parseCommand(Line *line, int *IC, int *DC)
 		else
 		{
 			/* Illegal Command. */
-			printError(line->lineNum, "No such Command as \"%s\".", line->commandStr);
+            printError(line->lineNum, "There's no \"%s\" Command.", line->commandStr);
 		}
 		line->isError = TRUE;
 		return;
@@ -508,7 +505,7 @@ void parseCommand(Line *line, int *IC, int *DC)
 	parseCmdOperands(line, IC, DC);
 }
 
-/* allocString function returns the same string in a different part of the memory by using malloc. */
+/* Returns the same string in a different part of the memory by using malloc. */
 char *allocString(const char *str) 
 {
 	char *newString = (char *)malloc(strlen(str) + 1);
@@ -520,7 +517,7 @@ char *allocString(const char *str)
 	return newString;
 }
 
-/* parseLine function parses a line, and print it's errors if there are any. */
+/* Parses a line, and print errors if needed */
 void parseLine(Line *line, char *lineStr, int lineNum, int *IC, int *DC)
 {
 	char *startOfNextPart = lineStr;
@@ -536,7 +533,7 @@ void parseLine(Line *line, char *lineStr, int lineNum, int *IC, int *DC)
 
 	if (!line->originalString)
 	{
-		printf("[Error] Not enough memory - malloc falied.");
+        printf("ERROR: Memory exceeded - malloc failed.");
 		return;
 	}
 
@@ -579,7 +576,7 @@ void parseLine(Line *line, char *lineStr, int lineNum, int *IC, int *DC)
 	}
 }
 
-/* readLine function puts a line from 'file' in 'buf'. Returns if the line is shorter than maxLength. */
+/* Puts a line from file in buffer.  Continue if the line is shorter than maxLength. */
 bool readLine(FILE *file, char *buf, size_t maxLength)
 {
 	char *endOfLine;
@@ -589,7 +586,7 @@ bool readLine(FILE *file, char *buf, size_t maxLength)
 		return FALSE;
 	}
 
-	/* Check if the line is too long (no '\n' was present). */
+    /* Check if the line is too long */
 	endOfLine = strchr(buf, '\n');
 	if (endOfLine)
 	{
@@ -598,7 +595,8 @@ bool readLine(FILE *file, char *buf, size_t maxLength)
 	else
 	{
 		char c;
-		bool ret = (feof(file)) ? TRUE : FALSE; /* Return FALSE, unless it's the end of the file */
+        /* Return FALSE, unless it's the end of the file */
+        bool ret = (feof(file)) ? TRUE : FALSE;
 
 		/* Keep reading chars until you reach the end of the line ('\n') or EOF */
 		do
@@ -612,9 +610,8 @@ bool readLine(FILE *file, char *buf, size_t maxLength)
 	return TRUE;
 }
 
-/* firstTransitionRead function readds the file for the first time, line by line, and parses it. */
-/* Returns how many errors were found. */
-int firstTransitionRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC)
+/* Reads the file and parses it, Returns how many errors were found */
+int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC)
 {
 	char lineStr[MAX_LINE_LENGTH + 2]; /* +2 for the \n and \0 at the end */
 	int errorsFound = 0;
@@ -628,7 +625,7 @@ int firstTransitionRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC
 			/* Check if the file is too lone */
 			if (*lines >= MAX_LINES_NUM)
 			{
-				printf("[Error] File is too long. Max lines number in file is %d.\n", MAX_LINES_NUM);
+                printf("ERROR: File is too long. Max lines in file is %d.\n", MAX_LINES_NUM);
 				return ++errorsFound;
 			}
 
@@ -645,8 +642,8 @@ int firstTransitionRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC
 			if (*IC + *DC >= MAX_DATA_LENGTH)
 			{
 				/* dataArr is full. Stop reading the file. */
-				printError(*lines + 1, "Too much data and code. Max memory words is %d.", MAX_DATA_LENGTH);
-				printf("[Info] Memory is full. Stoping to read the file.\n");
+                printError(*lines + 1, "Too much data. Max memory words is %d.", MAX_DATA_LENGTH);
+                printf("Memory is full. File reading stopped.\n");
 				return ++errorsFound;
 			}
 			++*lines;
@@ -654,7 +651,7 @@ int firstTransitionRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC
 		else if (!feof(file))
 		{
 			/* Line is too long */
-			printError(*lines + 1, "Line is too long. Max line length is %d.", MAX_LINE_LENGTH);
+            printError(*lines + 1, "Line is too long. Max line length is %d.", MAX_LINE_LENGTH);
 			errorsFound++;
 			 ++*lines;
 		}
