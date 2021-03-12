@@ -1,0 +1,3 @@
+/home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/flaysh/Projects/Compare-C-Projects/C_finished_project/cmake-build-debug/CMakeFiles/Flayshhhh.dir
