@@ -8,87 +8,89 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug"/>
+				<Option working_dir="/home/nutz/Desktop/c-final/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug"/>
+				<Option working_dir="/home/nutz/Desktop/c-final/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug"/>
+				<Option working_dir="/home/nutz/Desktop/c-final/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Flayshhhh">
-				<Option output="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Flayshhhh" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug"/>
+				<Option output="/home/nutz/Desktop/c-final/cmake-build-debug/Flayshhhh" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nutz/Desktop/c-final/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 Flayshhhh"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 Flayshhhh"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Flayshhhh/fast">
-				<Option output="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Flayshhhh" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug"/>
+				<Option output="/home/nutz/Desktop/c-final/cmake-build-debug/Flayshhhh" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nutz/Desktop/c-final/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/10.2.0/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 Flayshhhh/fast"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 Flayshhhh/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/nutz/Desktop/c-final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/flaysh/Projects/Compare-C-Projects/c-final/firstPass.c">
+		<Unit filename="/home/nutz/Desktop/c-final/firstPass.c">
 			<Option target="Flayshhhh"/>
 		</Unit>
-		<Unit filename="/home/flaysh/Projects/Compare-C-Projects/c-final/main.c">
+		<Unit filename="/home/nutz/Desktop/c-final/main.c">
 			<Option target="Flayshhhh"/>
 		</Unit>
-		<Unit filename="/home/flaysh/Projects/Compare-C-Projects/c-final/secondPass.c">
+		<Unit filename="/home/nutz/Desktop/c-final/secondPass.c">
 			<Option target="Flayshhhh"/>
 		</Unit>
-		<Unit filename="/home/flaysh/Projects/Compare-C-Projects/c-final/utils.c">
+		<Unit filename="/home/nutz/Desktop/c-final/utils.c">
 			<Option target="Flayshhhh"/>
 		</Unit>
-		<Unit filename="/home/flaysh/Projects/Compare-C-Projects/c-final/CMakeLists.txt">
+		<Unit filename="/home/nutz/Desktop/c-final/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

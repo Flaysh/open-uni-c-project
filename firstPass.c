@@ -52,15 +52,15 @@ extern Label labelsArray[MAX_LABELS_NUM];
 extern int labelsCount;
 extern Line *entryLines[MAX_LABELS_NUM];
 extern int entryLabelCount;
-extern int dataArray[MAX_DATA_LENGTH];
+extern int dataArray[DATA_MAX_LENGTH];
 
-/* Adds the given label to the labelArr and increases labelNum. Returns a pointer to the label in the array. */
+/* Adds the label to the array and increases labelNum. Returns a pointer to the label in the array. */
 Label *addLabelToArray(Label label, Line *line)
 {
 	/* Check if label is legal */
 	if (!isLegalLabel(line->lineStr, line->lineNum, TRUE))
 	{
-		/* Illegal label name */
+		/* Illegal label label_name */
 		line->isError = TRUE;
 		return NULL;
 	}
@@ -73,10 +73,10 @@ Label *addLabelToArray(Label label, Line *line)
 		return NULL;
 	}
 
-	/* Add the name to the label */
-	strcpy(label.name, line->lineStr);
+	/* Add the label_name to the label */
+	strcpy(label.label_name, line->lineStr);
 
-	/* Add the label to labelsArray and to the Line */
+	/* Add the label to labels Array and to the Line */
 	if (labelsCount < MAX_LABELS_NUM)
 	{
         labelsArray[labelsCount] = label;
@@ -89,11 +89,11 @@ Label *addLabelToArray(Label label, Line *line)
 	return NULL;
 }
 
-/* Adds the given number to the dataArray and increases DC. Returns if it succeeded. */
+/* Adds the given number to the data Array and increases DC. Returns if it succeeded. */
 bool addNumberToData(int num, int *IC, int *DC, int lineNum)
 {
-	/* Check if there is enough space in dataArray for the data */
-	if (*DC + *IC < MAX_DATA_LENGTH)
+	/* Check if there is enough space in data Array for the data */
+	if (*DC + *IC < DATA_MAX_LENGTH)
 	{
         dataArray[(*DC)++] = num;
 	}
@@ -105,7 +105,7 @@ bool addNumberToData(int num, int *IC, int *DC, int lineNum)
 	return TRUE;
 }
 
-/* Adds the given str to the dataArray and increases DC. Returns if it succeeded. */
+/* Adds the given str to the data Array and increases DC. Returns if it succeeded. */
 bool addStringToData(char *str, int *IC, int *DC, int lineNum)
 {
 	do
@@ -125,7 +125,7 @@ char *findLabel(Line *line, int IC)
 {
 	char *labelEnd = strchr(line->lineStr, ':');
 	Label label = {0};
-	label.address = DEFAULT_ADDRESS + IC;
+	label.label_address = STARTING_ADDRESS + IC;
 
     /* Find the label (or return NULL if there's none) */
 	if (!labelEnd)
@@ -141,7 +141,7 @@ char *findLabel(Line *line, int IC)
 		return NULL;
 	}
 
-    /* Check of the label is legal and add it to the labelList */
+    /* Check of the label is legal and add it to the label List */
 	line->label = addLabelToArray(label, line);
 	return labelEnd + 1; /* +1 to make it point at the next char after the \0 */
 }
@@ -165,11 +165,11 @@ void parseDataDirective(Line *line, int *IC, int *DC)
 	if (line->label)
 	{
 		line->label->isData = TRUE;
-		line->label->address = DEFAULT_ADDRESS + *DC;
+		line->label->label_address = STARTING_ADDRESS + *DC;
 	}
 
 	/* Check if there are params */
-	if (isWhiteSpace(line->lineStr))
+	if (checkWhiteSpace(line->lineStr))
 	{
 		/* No parameters */
 		printError(line->lineNum, "No parameter.");
@@ -181,14 +181,14 @@ void parseDataDirective(Line *line, int *IC, int *DC)
 	INFINITE_LOOP
 	{
 		/* Get next param or break if there isn't */
-		if (isWhiteSpace(line->lineStr))
+		if (checkWhiteSpace(line->lineStr))
 		{
 			break;
 		}
 		operandTok = getFirstOperand(line->lineStr, &endOfOp, &foundComma);
 
 		/* Add the param to dataArray */
-		if (isLegalNumber(operandTok, MEMORY_WORD_LENGTH, line->lineNum, &operandValue))
+		if (isLegalNumber(operandTok, MEMORY_WORD_LEN, line->lineNum, &operandValue))
 		{
 			if (!addNumberToData(operandValue, IC, DC, line->lineNum))
 			{
@@ -224,7 +224,7 @@ void parseStringDirective(Line *line, int *IC, int *DC)
 	if (line->label)
 	{
 		line->label->isData = TRUE;
-		line->label->address = DEFAULT_ADDRESS + *DC;
+		line->label->label_address = STARTING_ADDRESS + *DC;
 	}
 
     trimString(&line->lineStr);
@@ -263,7 +263,7 @@ void parseExternDirective(Line *line)
 	/* Make the label an extern label */
 	if (!line->isError)
 	{
-		labelPointer->address = 0;
+		labelPointer->label_address = 0;
 		labelPointer->isExtern = TRUE;
 	}
 }
@@ -342,7 +342,7 @@ void parseOpInfo(Operand *operand, int lineNum)
 	/* DVIR REPAIR */
 	operand->type = NUMBER;
 
-	if (isWhiteSpace(operand->str))
+	if (checkWhiteSpace(operand->str))
 	{
 		printError(lineNum, "Empty parameter.");
 		operand->type = INVALID;
@@ -366,7 +366,7 @@ void parseOpInfo(Operand *operand, int lineNum)
 		}
 		else
 		{
-			operand->type = isLegalNumber(operand->str, MEMORY_WORD_LENGTH, lineNum, &value) ? NUMBER : INVALID;
+			operand->type = isLegalNumber(operand->str, MEMORY_WORD_LEN, lineNum, &value) ? NUMBER : INVALID;
 		}
 	 }
 	/* Check if the type is REGISTER */
@@ -411,7 +411,7 @@ void parseCmdOperands(Line *line, int *IC, int *DC)
 	{
 
 		/* Check if there are still more operands to read */
-		if (isWhiteSpace(line->lineStr) || numOfOpsFound > 2)
+		if (checkWhiteSpace(line->lineStr) || numOfOpsFound > 2)
 		{
 			/* If there are more than 2 operands it's already illegal */
 			break;
@@ -436,7 +436,7 @@ void parseCmdOperands(Line *line, int *IC, int *DC)
 		}
 
 		numOfOpsFound++;
-        if (*IC + *DC < MAX_DATA_LENGTH)
+        if (*IC + *DC < DATA_MAX_LENGTH)
         {
             *IC = *IC + 1; /* Count the last Command word or operand. */
         }
@@ -523,7 +523,7 @@ void parseLine(Line *line, char *lineStr, int lineNum, int *IC, int *DC)
 	char *startOfNextPart = lineStr;
 
 	line->lineNum = lineNum;
-	line->address = DEFAULT_ADDRESS + *IC;
+	line->address = STARTING_ADDRESS + *IC;
 	line->originalString = allocString(lineStr);
 	line->lineStr = line->originalString;
 	line->isError = FALSE;
@@ -613,19 +613,19 @@ bool readLine(FILE *file, char *buf, size_t maxLength)
 /* Reads the file and parses it, Returns how many errors were found */
 int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC)
 {
-	char lineStr[MAX_LINE_LENGTH + 2]; /* +2 for the \n and \0 at the end */
+	char lineStr[LINE_MAX_LEN + 2]; /* +2 for the \n and \0 at the end */
 	int errorsFound = 0;
 	*lines = 0;
 
 	/* Read lines and parse them */
 	while (!feof(file))
 	{
-		if (readLine(file, lineStr, MAX_LINE_LENGTH + 2))
+		if (readLine(file, lineStr, LINE_MAX_LEN + 2))
 		{
 			/* Check if the file is too lone */
-			if (*lines >= MAX_LINES_NUM)
+			if (*lines >= MAXIMUM_LINES)
 			{
-                printf("ERROR: File is too long. Max lines in file is %d.\n", MAX_LINES_NUM);
+                printf("ERROR: File is too long. Max lines in file is %d.\n", MAXIMUM_LINES);
 				return ++errorsFound;
 			}
 
@@ -639,10 +639,10 @@ int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC)
 			}
 
 			/* Check if the number of memory words needed is small enough */
-			if (*IC + *DC >= MAX_DATA_LENGTH)
+			if (*IC + *DC >= DATA_MAX_LENGTH)
 			{
 				/* dataArr is full. Stop reading the file. */
-                printError(*lines + 1, "Too much data. Max memory words is %d.", MAX_DATA_LENGTH);
+                printError(*lines + 1, "Too much data. Max memory words is %d.", DATA_MAX_LENGTH);
                 printf("Memory is full. File reading stopped.\n");
 				return ++errorsFound;
 			}
@@ -651,7 +651,7 @@ int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC)
 		else if (!feof(file))
 		{
 			/* Line is too long */
-            printError(*lines + 1, "Line is too long. Max line length is %d.", MAX_LINE_LENGTH);
+            printError(*lines + 1, "Line is too long. Max line length is %d.", LINE_MAX_LEN);
 			errorsFound++;
 			 ++*lines;
 		}

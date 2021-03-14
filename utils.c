@@ -17,22 +17,34 @@ extern int labelsCount;
 extern Line *entryLines[MAX_LABELS_NUM];
 extern int entryLabelCount;
 
-/* If a certain label exists in the array It will return a pointer to the certain label, otherwise it will return NULL */
-Label *getLabel(char *labelName)
+/* Returns if string contains only white chars. */
+bool checkWhiteSpace(char *str)
 {
-	int i = 0;
+    while (*str)
+    {
+        if (!isspace(*str++))
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
 
-	if (labelName)
-	{
-		for (i = 0; i < labelsCount; i++)
-		{
-			if (strcmp(labelName, labelsArray[i].name) == 0)
-			{
-				return &labelsArray[i];
-			}
-		}
-	}
-	return NULL;
+
+/* Trim space from the beginning of the string */
+void trimLeftString(char **ptStr)
+{
+    /* Return if it's NULL */
+    if (!ptStr)
+    {
+        return;
+    }
+
+    /* Get ptStr to the start of the actual text */
+    while (isspace(**ptStr))
+    {
+        ++*ptStr;
+    }
 }
 
 /* If Command exists in the array, It will return the Command id, if not it will return -1*/
@@ -52,21 +64,6 @@ int getCommand(char *cmdName)
 	return -1;
 }
 
-/* Trim space from the beginning of the string */
-void trimLeftString(char **ptStr)
-{
-	/* Return if it's NULL */
-	if (!ptStr)
-	{
-		return;
-	}
-
-	/* Get ptStr to the start of the actual text */
-	while (isspace(**ptStr))
-	{
-		++*ptStr;
-	}
-}
 
 /* Delete all the spaces from the edges of the string ptStr is pointing to */
 void trimString(char **ptStr)
@@ -122,7 +119,23 @@ char *getToken(char *str, char **endOfTok)
 	}
 	return tokStart;
 }
+/* If a certain label exists in the array It will return a pointer to the certain label, otherwise it will return NULL */
+Label *getLabel(char *labelName)
+{
+    int i = 0;
 
+    if (labelName)
+    {
+        for (i = 0; i < labelsCount; i++)
+        {
+            if (strcmp(labelName, labelsArray[i].label_name) == 0)
+            {
+                return &labelsArray[i];
+            }
+        }
+    }
+    return NULL;
+}
 /* Returns if string contains only one word. */
 bool isOneWord(char *str)
 {
@@ -132,21 +145,10 @@ bool isOneWord(char *str)
 	 str++;
 	}					
 	/* Return if it's the end of the text or not. */
-	return isWhiteSpace(str);
+	return checkWhiteSpace(str);
 }
 
-/* Returns if string contains only white chars. */
-bool isWhiteSpace(char *str)
-{
-	while (*str)
-	{
-		if (!isspace(*str++))
-		{
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
+
 
 /* Returns if labelStr is a legal label name.*/
 bool isLegalLabel(char *labelStr, int lineNum, bool printErrors)
@@ -154,9 +156,9 @@ bool isLegalLabel(char *labelStr, int lineNum, bool printErrors)
 	int labelLength = strlen(labelStr), i;
 
 	/* Check if the label is at the correct eligable length */
-	if (strlen(labelStr) > MAX_LABEL_LENGTH)
+	if (strlen(labelStr) > LABEL_MAX_LEN)
 	{
-		if (printErrors) printError(lineNum, "Label is too long. Max label length is %d.", MAX_LABEL_LENGTH);
+		if (printErrors) printError(lineNum, "Label is too long. Max label length is %d.", LABEL_MAX_LEN);
 		return FALSE;
 	}
 
@@ -191,19 +193,19 @@ bool isLegalLabel(char *labelStr, int lineNum, bool printErrors)
 		return FALSE;
 	}
 
-	/* Check if it's not a name of a register */
+	/* Check if it's not a label_name of a register */
 	if (isRegister(labelStr, NULL)) /* NULL since we don't have to save the register number */
 	{
-		if (printErrors) printError(lineNum, "\"%s\" is illegal label - don't use a name of a register.", labelStr);
+		if (printErrors) printError(lineNum, "\"%s\" is illegal label - don't use a label_name of a register.", labelStr);
 		return FALSE;
 	}
 	
 
 
-	/* Check if it's not a name of a Command */
+	/* Check if it's not a label_name of a Command */
 	if (getCommand(labelStr) != -1)
 	{
-		if (printErrors) printError(lineNum, "\"%s\" is illegal label - don't use a name of Command.", labelStr);
+		if (printErrors) printError(lineNum, "\"%s\" is illegal label - don't use a label_name of Command.", labelStr);
 		return FALSE;
 	}
 
@@ -239,10 +241,10 @@ bool isExistingEntryLabel(char *labelName)
 	return FALSE;
 }
 
-/* Returns if str is a register name, and update value to be the register value. */
+/* Returns if str is a register label_name, and update value to be the register value. */
 bool isRegister(char *str, int *value)
 {
-	if (str[0] == 'r'  && str[1] >= '0' && str[1] - '0' <= MAX_REGISTER_DIGIT && str[2] == '\0') 
+	if (str[0] == 'r' && str[1] >= '0' && str[1] - '0' <= LAST_REGISTER && str[2] == '\0')
 	{
 		/* Update value if it's not NULL */
 		if (value)
@@ -289,7 +291,7 @@ bool isEmpty(Line *line)
 /* Also makes *endOfOp (if it's not NULL) point at the next char after the operand. */
 char *getFirstOperand(char *line, char **endOfOp, bool *foundComma)
 {
-	if (!isWhiteSpace(line))
+	if (!checkWhiteSpace(line))
 	{
 		/* Find the first comma */
 		char *end = strchr(line, ',');
@@ -355,10 +357,10 @@ bool isLegalStringParam(char **strParam, int lineNum)
 bool isLegalNumber(char *numStr, int numOfBits, int lineNum, int *value)
 {
 	char *endOfNum;
-	/* maxNum is the max number you can represent with (MAX_LABEL_LENGTH - 1) bits 
+	/* maxNum is the max number you can represent with (LABEL_MAX_LEN - 1) bits
 	 (-1 for the negative/positive bit) */
 	int maxNum = (1 << (numOfBits - 1)) - 1;
-	if (isWhiteSpace(numStr))
+	if (checkWhiteSpace(numStr))
 	{
 		printError(lineNum, "Empty parameter.");
 		return FALSE;

@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/flaysh/Projects/Compare-C-Projects/c-final/firstPass.c" "/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/firstPass.c.o"
-  "/home/flaysh/Projects/Compare-C-Projects/c-final/main.c" "/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/main.c.o"
-  "/home/flaysh/Projects/Compare-C-Projects/c-final/secondPass.c" "/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/secondPass.c.o"
-  "/home/flaysh/Projects/Compare-C-Projects/c-final/utils.c" "/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/utils.c.o"
+  "/home/nutz/Desktop/c-final/firstPass.c" "/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/firstPass.c.o"
+  "/home/nutz/Desktop/c-final/main.c" "/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/main.c.o"
+  "/home/nutz/Desktop/c-final/secondPass.c" "/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/secondPass.c.o"
+  "/home/nutz/Desktop/c-final/utils.c" "/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

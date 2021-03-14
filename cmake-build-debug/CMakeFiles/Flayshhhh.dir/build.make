@@ -54,19 +54,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /app/extra/clion/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/139/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /app/extra/clion/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/139/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/flaysh/Projects/Compare-C-Projects/c-final
+CMAKE_SOURCE_DIR = /home/nutz/Desktop/c-final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug
+CMAKE_BINARY_DIR = /home/nutz/Desktop/c-final/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Flayshhhh.dir/depend.make
@@ -79,55 +79,55 @@ include CMakeFiles/Flayshhhh.dir/flags.make
 
 CMakeFiles/Flayshhhh.dir/main.c.o: CMakeFiles/Flayshhhh.dir/flags.make
 CMakeFiles/Flayshhhh.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Flayshhhh.dir/main.c.o"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/main.c.o   -c /home/flaysh/Projects/Compare-C-Projects/c-final/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Flayshhhh.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/main.c.o   -c /home/nutz/Desktop/c-final/main.c
 
 CMakeFiles/Flayshhhh.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Flayshhhh.dir/main.c.i"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/flaysh/Projects/Compare-C-Projects/c-final/main.c > CMakeFiles/Flayshhhh.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nutz/Desktop/c-final/main.c > CMakeFiles/Flayshhhh.dir/main.c.i
 
 CMakeFiles/Flayshhhh.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Flayshhhh.dir/main.c.s"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/flaysh/Projects/Compare-C-Projects/c-final/main.c -o CMakeFiles/Flayshhhh.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nutz/Desktop/c-final/main.c -o CMakeFiles/Flayshhhh.dir/main.c.s
 
 CMakeFiles/Flayshhhh.dir/firstPass.c.o: CMakeFiles/Flayshhhh.dir/flags.make
 CMakeFiles/Flayshhhh.dir/firstPass.c.o: ../firstPass.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Flayshhhh.dir/firstPass.c.o"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/firstPass.c.o   -c /home/flaysh/Projects/Compare-C-Projects/c-final/firstPass.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Flayshhhh.dir/firstPass.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/firstPass.c.o   -c /home/nutz/Desktop/c-final/firstPass.c
 
 CMakeFiles/Flayshhhh.dir/firstPass.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Flayshhhh.dir/firstPass.c.i"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/flaysh/Projects/Compare-C-Projects/c-final/firstPass.c > CMakeFiles/Flayshhhh.dir/firstPass.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nutz/Desktop/c-final/firstPass.c > CMakeFiles/Flayshhhh.dir/firstPass.c.i
 
 CMakeFiles/Flayshhhh.dir/firstPass.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Flayshhhh.dir/firstPass.c.s"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/flaysh/Projects/Compare-C-Projects/c-final/firstPass.c -o CMakeFiles/Flayshhhh.dir/firstPass.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nutz/Desktop/c-final/firstPass.c -o CMakeFiles/Flayshhhh.dir/firstPass.c.s
 
 CMakeFiles/Flayshhhh.dir/secondPass.c.o: CMakeFiles/Flayshhhh.dir/flags.make
 CMakeFiles/Flayshhhh.dir/secondPass.c.o: ../secondPass.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Flayshhhh.dir/secondPass.c.o"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/secondPass.c.o   -c /home/flaysh/Projects/Compare-C-Projects/c-final/secondPass.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Flayshhhh.dir/secondPass.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/secondPass.c.o   -c /home/nutz/Desktop/c-final/secondPass.c
 
 CMakeFiles/Flayshhhh.dir/secondPass.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Flayshhhh.dir/secondPass.c.i"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/flaysh/Projects/Compare-C-Projects/c-final/secondPass.c > CMakeFiles/Flayshhhh.dir/secondPass.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nutz/Desktop/c-final/secondPass.c > CMakeFiles/Flayshhhh.dir/secondPass.c.i
 
 CMakeFiles/Flayshhhh.dir/secondPass.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Flayshhhh.dir/secondPass.c.s"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/flaysh/Projects/Compare-C-Projects/c-final/secondPass.c -o CMakeFiles/Flayshhhh.dir/secondPass.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nutz/Desktop/c-final/secondPass.c -o CMakeFiles/Flayshhhh.dir/secondPass.c.s
 
 CMakeFiles/Flayshhhh.dir/utils.c.o: CMakeFiles/Flayshhhh.dir/flags.make
 CMakeFiles/Flayshhhh.dir/utils.c.o: ../utils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Flayshhhh.dir/utils.c.o"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/utils.c.o   -c /home/flaysh/Projects/Compare-C-Projects/c-final/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Flayshhhh.dir/utils.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Flayshhhh.dir/utils.c.o   -c /home/nutz/Desktop/c-final/utils.c
 
 CMakeFiles/Flayshhhh.dir/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Flayshhhh.dir/utils.c.i"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/flaysh/Projects/Compare-C-Projects/c-final/utils.c > CMakeFiles/Flayshhhh.dir/utils.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nutz/Desktop/c-final/utils.c > CMakeFiles/Flayshhhh.dir/utils.c.i
 
 CMakeFiles/Flayshhhh.dir/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Flayshhhh.dir/utils.c.s"
-	/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/flaysh/Projects/Compare-C-Projects/c-final/utils.c -o CMakeFiles/Flayshhhh.dir/utils.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nutz/Desktop/c-final/utils.c -o CMakeFiles/Flayshhhh.dir/utils.c.s
 
 # Object files for target Flayshhhh
 Flayshhhh_OBJECTS = \
@@ -145,7 +145,7 @@ Flayshhhh: CMakeFiles/Flayshhhh.dir/secondPass.c.o
 Flayshhhh: CMakeFiles/Flayshhhh.dir/utils.c.o
 Flayshhhh: CMakeFiles/Flayshhhh.dir/build.make
 Flayshhhh: CMakeFiles/Flayshhhh.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Flayshhhh"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Flayshhhh"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Flayshhhh.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -158,6 +158,6 @@ CMakeFiles/Flayshhhh.dir/clean:
 .PHONY : CMakeFiles/Flayshhhh.dir/clean
 
 CMakeFiles/Flayshhhh.dir/depend:
-	cd /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/flaysh/Projects/Compare-C-Projects/c-final /home/flaysh/Projects/Compare-C-Projects/c-final /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug /home/flaysh/Projects/Compare-C-Projects/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nutz/Desktop/c-final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nutz/Desktop/c-final /home/nutz/Desktop/c-final /home/nutz/Desktop/c-final/cmake-build-debug /home/nutz/Desktop/c-final/cmake-build-debug /home/nutz/Desktop/c-final/cmake-build-debug/CMakeFiles/Flayshhhh.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Flayshhhh.dir/depend
 

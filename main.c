@@ -17,7 +17,7 @@ Label labelsArray[MAX_LABELS_NUM];
 int labelsCount = 0;
 Line *entryLines[MAX_LABELS_NUM];
 int entryLabelCount = 0;
-int dataArray[MAX_DATA_LENGTH];
+int dataArray[DATA_MAX_LENGTH];
 
 
 /* ====== Methods ====== */
@@ -28,7 +28,7 @@ int getNumDecimalLength(int num)
 	while(num)
 	{
 		l++;
-		num /= DECIMAL;
+		num /= DECIMAL_TEN;
 	}
 	return l;
 }
@@ -103,7 +103,7 @@ void printExternToFile(FILE *file, int num)
 	fprintf(file, "%d", num);
 }
 
-/* Creates a file from a given name and ending, and returns a pointer to it. */
+/* Creates a file from a given label_name and ending, and returns a pointer to it. */
 FILE *openFile(char *name, char *ending, const char *mode)
 {
 	FILE *file;
@@ -132,7 +132,7 @@ void createObjectFile(char *name, int IC, int DC, int *memoryArr,int* areArray)
 	for (i = 0; i < IC + DC; i++)
 	{
 		fprintf(file, "\n");
-		printDestToFile(file, DEFAULT_ADDRESS + i); /* adding the 100 to the IC print */
+		printDestToFile(file, STARTING_ADDRESS + i); /* adding the 100 to the IC print */
 		fprintf(file, "\t\t");
 		printDataToFile(file, memoryArr[i]);
 		printAREToFile(file, areArray[i]);
@@ -157,7 +157,7 @@ void createEntriesFile(char *name)
 	for (i = 0; i < entryLabelCount; i++)
 	{
 		fprintf(file, "%s\t\t", entryLines[i]->lineStr);
-		printEntryToFile(file, getLabel(entryLines[i]->lineStr)->address);
+		printEntryToFile(file, getLabel(entryLines[i]->lineStr)->label_address);
 
 		if (i != entryLabelCount - 1)
 		{
@@ -192,7 +192,7 @@ void createExternFile(char *name, Line *linesArr, int linesFound)
 				{
 					fprintf(file, "\n");
 				}
-				fprintf(file, "%s\t\t", label->name);
+				fprintf(file, "%s\t\t", label->label_name);
 				printExternToFile(file, linesArr[i].op1.address);
 				firstPrint = FALSE;
 			}
@@ -214,7 +214,7 @@ void createExternFile(char *name, Line *linesArr, int linesFound)
 					fprintf(file, "\n");
 				}
 
-				fprintf(file, "%s\t\t", label->name);
+				fprintf(file, "%s\t\t", label->label_name);
 				printExternToFile(file, linesArr[i].op2.address);
 				firstPrint = FALSE;
 			}
@@ -237,7 +237,7 @@ void clearAllData(Line *linesArr, int linesFound, int dataCount)
 	/* Reset global labels */
 	for (i = 0; i < labelsCount; i++)
 	{
-        labelsArray[i].address = 0;
+        labelsArray[i].label_address = 0;
         labelsArray[i].isData = 0;
         labelsArray[i].isExtern = 0;
 	}
@@ -267,8 +267,8 @@ void clearAllData(Line *linesArr, int linesFound, int dataCount)
 void parseFile(char *fileName)
 {
  	FILE *file = openFile("ps", ".as", "r");
-	Line linesArr[MAX_LINES_NUM];
-	int memoryArr[MAX_DATA_LENGTH] = {0 }, IC = 0, DC = 0, numOfErrors = 0, linesFound = 0;
+	Line linesArr[MAXIMUM_LINES];
+	int memoryArr[DATA_MAX_LENGTH] = {0 }, IC = 0, DC = 0, numOfErrors = 0, linesFound = 0;
     int areArr [9000] = { 0 };
 
 	/* Open File */
@@ -305,7 +305,7 @@ void parseFile(char *fileName)
 	fclose(file);
 }
 
-/* Main function. Calls the "parsefile" method for each file name in argv. */
+/* Main function. Calls the "parsefile" method for each file label_name in argv. */
 int main(int argc, char *argv[])
 {
 	int i;

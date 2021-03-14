@@ -19,19 +19,31 @@ assembler.h - header file for the project, includes, defines and declarations.
 #define BYTE_SIZE			8
 #define INFINITE_LOOP		for(;;)
 
-#define MAX_DATA_LENGTH		4096
-#define MAX_LINES_NUM		300
-#define DEFAULT_ADDRESS		100
-#define MAX_LINE_LENGTH		80
-#define MAX_LABEL_LENGTH	31
-#define MEMORY_WORD_LENGTH	12
-#define DECIMAL 10
-#define MAX_REGISTER_DIGIT	7
-#define MAX_LABELS_NUM		MAX_LINES_NUM
+#define MAX_LABELS_NUM		MAXIMUM_LINES
+
+#define MEMORY_WORD_LEN	12
+#define MAXIMUM_LINES		300
+#define DATA_MAX_LENGTH		4096
+#define STARTING_ADDRESS		100
+#define LINE_MAX_LEN		80
+#define LAST_REGISTER	7
+#define LABEL_MAX_LEN	31
+#define DECIMAL_TEN 10
 
 
-/* TRUE and FALSE */
+
+/* TRUE  FALSE */
 typedef unsigned int bool;
+
+/* Labels Struct */
+typedef struct
+{
+	int label_address;
+	char label_name[LABEL_MAX_LEN];
+	bool isExtern;
+	bool isData;
+	int line_num;
+} Label;
 
 /* Command struct */
 typedef struct
@@ -42,17 +54,6 @@ typedef struct
     unsigned int funct : 4;
 } Command;
 
-
-/* Labels Struct */
-typedef struct
-{
-	int address;
-	char name[MAX_LABEL_LENGTH];
-	bool isExtern;
-	bool isData;
-	int line_num;
-} Label;
-
 /* Directive Struct */
 typedef struct 
 {
@@ -62,7 +63,7 @@ typedef struct
 
 
 
-/* Operands */
+/* Operand types */
 typedef enum { NUMBER = 0, LABEL = 1, RELATIVE_LABEL = 2, REGISTER = 3, INVALID = -1 } opType;
 
 /*Operand struct*/
@@ -78,18 +79,18 @@ typedef struct
 /* Line Struct */
 typedef struct
 {
-    int lineNum;				/* Line in the file */
-    int address;				/* Address of the first word in the line */
-    char *originalString;		/* Original pointer, allocated by malloc */
-    char *lineStr;				/* String in the line*/
-    bool isError;				/* Error status */
-    Label *label;			    /* Pointer to the lines label in labelArr */
-    char *commandStr;			/* The string of the Command or Directive */
+    int lineNum;
+    int address;
+    char *originalString;
+    char *lineStr;
+    bool isError;
+    Label *label;
+    char *commandStr;
 
     /* Command line */
-    const Command *cmd;			/* A pointer to the Command in commandArray */
-    Operand op1;			/* The 1st operand */
-    Operand op2;			/* The 2nd operand */
+    const Command *cmd;
+    Operand op1;
+    Operand op2;
 } Line;
 
 /* ARE Types */
@@ -103,28 +104,26 @@ typedef struct
 } MemoryWord;
 
 
-/* Functions */
-int getCommand(char *cmdName);
-Label *getLabel(char *labelName);
-void trimLeftString(char **ptStr);
-char *getToken(char *str, char **endOfTok);
-bool isOneWord(char *str);
-bool isWhiteSpace(char *str);
-void trimString(char **ptStr);
+/* FUNCTION DECLARATIONS*/
 bool isDirective(char *cmd);
 bool isLegalStringParam(char **strParam, int lineNum);
 bool isExistingEntryLabel(char *labelName);
 bool isRegister(char *str, int *value);
 bool isEmpty(Line *line);
+bool isOneWord(char *str);
+bool checkWhiteSpace(char *str);
 bool isLegalLabel(char *label, int lineNum, bool printErrors);
 bool isExistingLabel(char *label);
-char *getFirstOperand(char *line, char **endOfOp, bool *foundComma);
 bool isLegalNumber(char *numStr, int numOfBits, int lineNum, int *value);
+void trimLeftString(char **ptStr);
+char *getToken(char *str, char **endOfTok);
+void trimString(char **ptStr);
+int getCommand(char *cmdName);
+Label *getLabel(char *labelName);
+char *getFirstOperand(char *line, char **endOfOp, bool *foundComma);
 
-/* main methods */
 void printError(int lineNum, const char *format, ...);
 
-/* Transition methods */
 int firstPassRead(FILE *file, Line *linesArr, int *lines, int *IC, int *DC);
 int secondPassRead(int *memoryArr, int* areArr, Line *linesArr, int lineNum, int IC, int DC);
 
