@@ -266,7 +266,7 @@ void clearAllData(Line *linesArr, int linesFound, int dataCount)
 /* Parses a file, and creates the output files. */
 void parseFile(char *fileName)
 {
- 	FILE *file = openFile("ps", ".as", "r");
+ 	FILE *file = openFile(fileName, ".as", "r");
 	Line linesArr[MAXIMUM_LINES];
 	int memoryArr[DATA_MAX_LENGTH] = {0 }, IC = 0, DC = 0, numOfErrors = 0, linesFound = 0;
     int areArr [9000] = { 0 };
